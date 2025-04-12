@@ -1,76 +1,75 @@
-# chaikin
+# Chaikin's Algorithm Visualization
 
-Chaikin's algorithm is a curve subdivision algorithm that smooths a polyline or polygon by "cutting corners" - replacing each corner with two new points.
+This project is an interactive visualization of Chaikin's algorithm, a curve subdivision algorithm that smooths a polyline or polygon by "cutting corners" - replacing each corner with two new points.
 
-## Understanding Chaikin's Algorithm and Project Requirements
-Based on the information I've gathered, I understand that:
+## About Chaikin's Algorithm
 
-Chaikin's algorithm is a curve subdivision algorithm that smooths a polyline or polygon by "cutting corners" - replacing each corner with two new points.
-The project requires:
-- Creating a canvas where users can draw points
-- Implementing Chaikin's algorithm to smooth the curve formed by these points
-- Animating the steps of the algorithm (7 steps)
-- Handling user input (mouse clicks for points, Enter to start animation, Escape to quit)
-- Special cases for 1 or 2 points
-The animation should cycle through the steps of Chaikin's algorithm, showing how the curve evolves.
+Chaikin's algorithm is a simple yet powerful method for curve subdivision. It works by:
 
-## Implementation Plan
-1. Project Setup
-   - Create a new Rust project using Cargo:
-     ```
-     cargo new chaikin_animation
-     cd chaikin_animation
-     ```
-   - Add a graphics library dependency to Cargo.toml. Based on my research, macroquad seems like a good choice for this project as it's simple to use and cross-platform.
+1. Taking a set of points that form a polyline or polygon
+2. For each pair of consecutive points, creating two new points that are positioned at 1/4 and 3/4 along the line segment
+3. Replacing the original points with these new points
+4. Repeating the process to achieve smoother curves
 
-2. Core Components
-   - Point Management:
-     - Create a structure to store the control points
-     - Implement functions to add points via mouse clicks
-     - Implement functions to draw points on the canvas
-   - Chaikin's Algorithm Implementation:
-     - Implement the core algorithm to generate new points by cutting corners
-     - Create a function that can apply the algorithm iteratively
-   - Animation System:
-     - Create a state machine to manage the animation states (drawing points, animating, etc.)
-     - Implement a timer to control the animation speed
-     - Create functions to draw each step of the algorithm
-   - User Interface:
-     - Handle mouse input for placing points
-     - Handle keyboard input (Enter to start animation, Escape to quit)
-     - Implement visual feedback for user actions
+With each iteration, the curve becomes smoother and approaches a quadratic B-spline.
 
-3. Detailed Implementation Steps
-   - Set up the basic application structure:
-     - Create the main loop
-     - Initialize the window and graphics context
-     - Set up the state management
-   - Implement point drawing and management:
-     - Create a data structure to store points
-     - Implement mouse click detection to add points
-     - Draw points on the canvas
-   - Implement Chaikin's algorithm:
-     - Create a function to apply one iteration of Chaikin's algorithm
-     - Store intermediate results for animation
-   - Implement the animation system:
-     - Create a timer to control animation speed
-     - Implement drawing of intermediate steps
-     - Create a loop to cycle through the animation steps
-   - Handle special cases:
-     - Implement special handling for 1 point (just show the point)
-     - Implement special handling for 2 points (draw a straight line)
-   - Implement user controls:
-     - Enter key to start animation
-     - Escape key to quit
-     - Optional: Clear screen functionality
-     - Optional: Point dragging
-   - Polish and optimize:
-     - Add visual feedback
-     - Optimize performance
-     - Add any bonus features
+## Features
 
-## File Structure
-- Cargo.toml: Project configuration and dependencies
-- src/main.rs: Main application entry point and loop
-- src/chaikin.rs: Implementation of Chaikin's algorithm
-- src/animation.rs: Animation system and state management
+- Interactive point placement with mouse clicks
+- Visualization of the original polyline/polygon
+- Animation of Chaikin's algorithm through 7 iterations
+- Special handling for cases with fewer than 3 points
+- Simple UI with instructions
+- Reset functionality
+
+## Implementation
+
+This project is implemented in Rust using the macroquad graphics library. The code is organized into three main modules:
+
+- `src/main.rs`: Main application entry point and event loop
+- `src/chaikin.rs`: Implementation of Chaikin's algorithm
+- `src/animation.rs`: Animation system and state management
+
+### Key Components
+
+- **Point Management**: Points are stored as Vec2 objects and can be added via mouse clicks
+- **Chaikin's Algorithm**: Implemented with a configurable ratio parameter (set to 0.25)
+- **Animation System**: Uses a state machine to manage drawing and animation states
+- **User Interface**: Simple text instructions and visual feedback
+
+## How to Run
+
+1. Make sure you have Rust and Cargo installed on your system
+2. Clone this repository
+3. Run the application with:
+
+```bash
+cargo run
+```
+
+## How to Use
+
+1. **Drawing Mode**:
+   - Click anywhere on the canvas to add control points (at least 3 for a proper polygon)
+   - Press Enter to start the animation
+   - Press Escape to quit the application
+   - Press R to reset and clear all points
+
+2. **Animation Mode**:
+   - The animation will automatically cycle through 7 steps of Chaikin's algorithm
+   - Each step shows the result of applying the algorithm one more time
+   - Press Escape to quit the application
+
+## Technical Details
+
+- The algorithm uses a ratio of 0.25 for corner cutting
+- The animation cycles through 7 iterations of the algorithm
+- The application supports both open and closed curves
+- The animation speed is configurable (currently set to 0.5 seconds per step)
+
+## Project Structure
+
+- `Cargo.toml`: Project configuration and dependencies
+- `src/main.rs`: Main application entry point and loop
+- `src/chaikin.rs`: Implementation of Chaikin's algorithm
+- `src/animation.rs`: Animation system and state management
