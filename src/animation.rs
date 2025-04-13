@@ -45,6 +45,7 @@ impl AnimationManager {
         self.points.push(position);
     }
 
+    /// Starts the animation by calculating all steps of Chaikin's algorithm
     pub fn start_animation(&mut self) {
         if self.points.len() >= 3 {
             self.animation_steps = chaikin::apply_chaikin(&self.points, 7, 0.25);
@@ -54,6 +55,7 @@ impl AnimationManager {
         }
     }
 
+    /// Updates the animation state
     pub fn update(&mut self, dt: f32) {
         match self.state {
             AppState::Drawing => {}
