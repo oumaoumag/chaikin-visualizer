@@ -3,8 +3,11 @@ use macroquad::prelude::*;
 
 use crate::chaikin;
 
+/// Represents the current state of the application
 pub enum AppState {
+    /// User is drawing control points
     Drawing,
+    /// Animation is playing
     Animating,
 }
 
