@@ -40,6 +40,7 @@ impl AnimationManager {
         }
     }
 
+    /// Adds a point to the list of control points
     pub fn add_point(&mut self, position: Vec2) {
         self.points.push(position);
     }
