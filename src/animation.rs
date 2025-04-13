@@ -162,6 +162,7 @@ impl AnimationManager {
         }
     }
 
+    /// Resets the application to the drawing state
     pub fn reset(&mut self) {
         self.points.clear();
         self.animation_steps.clear();
