@@ -28,6 +28,7 @@ pub struct AnimationManager {
 }
 
 impl AnimationManager {
+    /// Creates a new animation manager with default values
     pub fn new() -> Self {
         Self {
             points: Vec::new(),
