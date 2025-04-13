@@ -1,5 +1,7 @@
 use macroquad::math::Vec2;
 
+/// Applies one iteration of Chaikin's algorithm to a set of points
+/// Returns a new set of points with corners "cut"
 pub fn chaikin_iteration(points: &[Vec2], ratio: f32) -> Vec<Vec2> {
     if points.len() <= 2 {
         return points.to_vec();
@@ -21,6 +23,7 @@ pub fn chaikin_iteration(points: &[Vec2], ratio: f32) -> Vec<Vec2> {
     new_points
 }
 
+/// Applies Chaikin's algorithm for a specified number of iterations
 pub fn apply_chaikin(points: &[Vec2], iterations: usize, ratio: f32) -> Vec<Vec<Vec2>> {
     let mut results = Vec::new();
     results.push(points.to_vec());
