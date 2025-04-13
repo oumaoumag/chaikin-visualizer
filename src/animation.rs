@@ -70,6 +70,7 @@ impl AnimationManager {
         }
     }
 
+    /// Draws the current state of the application
     pub fn draw(&self) {
         clear_background(Color::new(0.1, 0.1, 0.1, 1.0));
 
