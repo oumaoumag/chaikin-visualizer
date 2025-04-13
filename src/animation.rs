@@ -168,6 +168,6 @@ impl AnimationManager {
         self.animation_steps.clear();
         self.current_step = 0;
         self.animation_timer = 0.0;
-        self.state: AppState::Drawing;
+        self.state = AppState::Drawing;
     }
 }
