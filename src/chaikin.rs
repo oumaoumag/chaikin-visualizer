@@ -1,10 +1,6 @@
 use macroquad::math::Vec2;
 
-/// Applies one iteration of Chaikin's algorithm to a set of points
-/// Returns a new set of points with corners "cut"
-///
-/// * `points` - The input points forming a polygon
-/// * `ratio` - Amount of corner cutting (typically 0.25)
+
 pub fn chaikin_iteration(points: &[Vec2], ratio: f32) -> Vec<Vec2> {
     if points.len() <= 2 {
         return points.to_vec();
