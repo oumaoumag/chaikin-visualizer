@@ -1,6 +1,14 @@
 use macroquad::math::Vec2;
 
 
+/// Performs a single iteration of Chaikin's corner-cutting algorithm
+///
+/// # Arguments
+/// * `points` - A slice of 2D points representing a polyline or polygon
+/// * `ratio` - The corner-cutting ratio (typically 0.25)
+///
+/// # Returns
+/// A new vector of points representing the smoothed curve after one iteration
 pub fn chaikin_iteration(points: &[Vec2], ratio: f32) -> Vec<Vec2> {
     if points.len() <= 2 {
         return points.to_vec();
