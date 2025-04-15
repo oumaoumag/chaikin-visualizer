@@ -8,7 +8,7 @@ use macroquad::window::Conf;
 use animation::AnimationManager;
 use animation::AppState;
 
-fn widow_conf() -> Conf {
+fn window_conf() -> Conf {
     Conf {
         window_title: "Chaikin's Algorithm".to_owned(),
         window_width: 1024,
@@ -17,7 +17,7 @@ fn widow_conf() -> Conf {
     }
 }
 
-#[macroquad::main(widow_conf)]
+#[macroquad::main(window_conf)]
 async fn main() {
     let mut animation_manager = AnimationManager::new();
 
