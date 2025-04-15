@@ -3,15 +3,14 @@ use macroquad::prelude::*;
 
 use crate::chaikin;
 
-/// Represents the current state of the application
+// Represents the current state of the application
 pub enum AppState {
-    /// User is drawing control points
-    Drawing,
-    /// Animation is playing
-    Animating,
+    Drawing,    // User is drawing control points
+    Animating, // Animation is playing
+    Paused,    // Animations is paused 
 }
 
-/// Manages the animation and state of the application
+// Manages the animation and state of the application
 pub struct AnimationManager {
     pub points: Vec<Vec2>,                 // Control points drawn by the user
     pub state: AppState,                  // Current application state
@@ -24,7 +23,7 @@ pub struct AnimationManager {
 }   
 
 impl AnimationManager {
-    /// Creates a new animation manager with default values
+    // Creates a new animation manager with default values
     pub fn new() -> Self {
         Self {
             points: Vec::new(),
@@ -38,12 +37,12 @@ impl AnimationManager {
         }
     }
 
-    /// Adds a point to the list of control points
+    // Adds a point to the list of control points
     pub fn add_point(&mut self, position: Vec2) {
         self.points.push(position);
     }
 
-    /// Starts the animation by calculating all steps of Chaikin's algorithm
+    // Starts the animation by calculating all steps of Chaikin's algorithm
     pub fn start_animation(&mut self) {
         if self.points.len() >= 3 {
             self.animation_steps = chaikin::apply_chaikin(&self.points, 7, 0.25);
@@ -53,7 +52,16 @@ impl AnimationManager {
         }
     }
 
-    /// Updates the animation state
+    // Pauses the Animation
+    pub fn toggle_animation_pause(&mut self) {
+        match self.state {
+            AppState::Animating => self.state = AppState::Paused,
+            AppState::Paused => self.state = AppState::Animating,
+            AppState::Drawing => (),
+        }
+    }
+
+    // Updates the animation state
     pub fn update(&mut self, dt: f32) {
         match self.state {
             AppState::Drawing => {}
@@ -65,6 +73,7 @@ impl AnimationManager {
                     self.current_step = (self.current_step + 1) % self.animation_steps.len();
                 }
             }
+            AppState::Paused => {} // Do nothing when paused
         }
     }
 
@@ -74,10 +83,12 @@ impl AnimationManager {
 
         match self.state {
             AppState::Drawing => {
+                // Draw points
                 for point in &self.points {
                     draw_circle(point.x, point.y, 5.0, RED);
                 }
 
+                // Draw lines between points
                 if self.points.len() >= 2 {
                     for i in 0..self.points.len() - 1 {
                         draw_line(
@@ -104,20 +115,22 @@ impl AnimationManager {
                 }
 
                 draw_text(
-                    "Click to add points. Press Enter to start animation. Press Escape to quit.",
+                    "Click to add points. Press Enter to start animation. Press R to reset. Press Escape to quit.",
                     20.0,
                     20.0,
                     20.0,
                     WHITE,
                 );
             }
-            AppState::Animating => {
+            AppState::Animating | AppState::Paused => {
                 let current_points = &self.animation_steps[self.current_step];
 
+                // Draw points
                 for point in current_points {
                     draw_circle(point.x, point.y, 3.0, BLUE);
                 }
 
+                // Draw lines
                 if current_points.len() >= 2 {
                     for i in 0..current_points.len() - 1 {
                         draw_line(
@@ -141,8 +154,14 @@ impl AnimationManager {
                     );
                 }
 
+                let status = if matches!(self.state, AppState::Paused) {
+                    "PAUSED"
+                } else {
+                    "Playing"
+                };
+
                 draw_text(
-                    &format!("Step: {}/{}", self.current_step, self.animation_steps.len() - 1),
+                    &format!("Step: {}/{} ({})", self.current_step, self.animation_steps.len() - 1, status),
                     20.0,
                     20.0,
                     20.0,
@@ -150,7 +169,7 @@ impl AnimationManager {
                 );
 
                 draw_text(
-                    "Press Escape to quit.",
+                    "Space to pause/resume. Press R to reset. Press Escape to quit.",
                     20.0,
                     50.0,
                     20.0,
