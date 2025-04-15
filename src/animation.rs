@@ -168,7 +168,7 @@ impl AnimationManager {
     }
 
     pub fn update_dragging(&mut self, mouse_pos: Vec2) {
-        if let Some(index) = self.dragging_point_index{
+        if let Some(index) = self.dragging_point_index {
             self.points[index] = mouse_pos;
         }
     }
@@ -180,7 +180,7 @@ impl AnimationManager {
     fn find_closest_point(&self, mouse_pos: Vec2) -> Option<usize> {
         self.points
             .iter()
-            .enumarate()
+            .enumerate()
             .map(|(i, &p)| (i, (p - mouse_pos).length()))
             .filter(|&(_, dist)| dist <= self.drag_threshold)
             .min_by(|a, b| a.1.partial_cmp(&b.1).unwrap())
