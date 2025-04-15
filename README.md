@@ -1,75 +1,99 @@
 # Chaikin's Algorithm Visualization
 
-This project is an interactive visualization of Chaikin's algorithm, a curve subdivision algorithm that smooths a polyline or polygon by "cutting corners" - replacing each corner with two new points.
+An interactive visualization of Chaikin's curve subdivision algorithm implemented in Rust using the Macroquad graphics library. This tool demonstrates how a simple corner-cutting technique can create smooth curves from a set of control points.
+
+![Chaikin's Algorithm Demo](demo.gif)
 
 ## About Chaikin's Algorithm
 
-Chaikin's algorithm is a simple yet powerful method for curve subdivision. It works by:
+Chaikin's algorithm is an elegant method for curve subdivision that creates smooth curves by iteratively "cutting corners". The process:
 
-1. Taking a set of points that form a polyline or polygon
-2. For each pair of consecutive points, creating two new points that are positioned at 1/4 and 3/4 along the line segment
-3. Replacing the original points with these new points
-4. Repeating the process to achieve smoother curves
+1. Takes a set of points forming a polyline/polygon
+2. For each line segment between consecutive points:
+   - Creates a point at 25% of the segment length
+   - Creates another point at 75% of the segment length
+3. Replaces original points with these new points
+4. Repeats the process for smoother results
 
-With each iteration, the curve becomes smoother and approaches a quadratic B-spline.
+Each iteration produces a smoother curve that approaches a quadratic B-spline.
 
 ## Features
 
-- Interactive point placement with mouse clicks
-- Visualization of the original polyline/polygon
-- Animation of Chaikin's algorithm through 7 iterations
-- Special handling for cases with fewer than 3 points
-- Simple UI with instructions
-- Reset functionality
+- **Interactive Drawing**: Click to place control points anywhere on the canvas
+- **Point Manipulation**: Drag existing points to adjust the curve
+- **Real-time Preview**: See the original polygon while drawing
+- **Animated Visualization**: Watch the smoothing process through multiple iterations
+- **Playback Control**: Pause/resume animation, reset the canvas
+- **Automatic Closure**: Creates closed curves with 3 or more points
 
-## Implementation
+## Controls
 
-This project is implemented in Rust using the macroquad graphics library. The code is organized into three main modules:
-
-- `src/main.rs`: Main application entry point and event loop
-- `src/chaikin.rs`: Implementation of Chaikin's algorithm
-- `src/animation.rs`: Animation system and state management
-
-### Key Components
-
-- **Point Management**: Points are stored as Vec2 objects and can be added via mouse clicks
-- **Chaikin's Algorithm**: Implemented with a configurable ratio parameter (set to 0.25)
-- **Animation System**: Uses a state machine to manage drawing and animation states
-- **User Interface**: Simple text instructions and visual feedback
-
-## How to Run
-
-1. Make sure you have Rust and Cargo installed on your system
-2. Clone this repository
-3. Run the application with:
-
-```bash
-cargo run
-```
-
-## How to Use
-
-1. **Drawing Mode**:
-   - Click anywhere on the canvas to add control points (at least 3 for a proper polygon)
-   - Press Enter to start the animation
-   - Press Escape to quit the application
-   - Press R to reset and clear all points
-
-2. **Animation Mode**:
-   - The animation will automatically cycle through 7 steps of Chaikin's algorithm
-   - Each step shows the result of applying the algorithm one more time
-   - Press Escape to quit the application
+- **Left Mouse Button**: Add or drag control points
+- **Enter**: Start the animation
+- **Space**: Pause/resume animation
+- **R**: Reset the canvas
+- **Escape**: Quit the application
 
 ## Technical Details
 
-- The algorithm uses a ratio of 0.25 for corner cutting
-- The animation cycles through 7 iterations of the algorithm
-- The application supports both open and closed curves
-- The animation speed is configurable (currently set to 0.5 seconds per step)
+- **Implementation Language**: Rust
+- **Graphics Library**: Macroquad 0.4
+- **Algorithm Parameters**:
+  - Corner cutting ratio: 0.25 (25%)
+  - Animation steps: 7 iterations
+  - Animation speed: 0.5 seconds per step
+- **Window Size**: 1024x768 pixels
+
+## Building and Running
+
+### Prerequisites
+- Rust toolchain (1.70 or later)
+- Cargo package manager
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/oumaoumag/chaikin-visualizer.git
+cd chaikin-visualizer
+```
+
+2. Build and run:
+```bash
+cargo run --release
+```
 
 ## Project Structure
 
-- `Cargo.toml`: Project configuration and dependencies
-- `src/main.rs`: Main application entry point and loop
-- `src/chaikin.rs`: Implementation of Chaikin's algorithm
-- `src/animation.rs`: Animation system and state management
+```
+chaikin-visualizer/
+├── src/
+│   ├── main.rs         # Application entry point and event loop
+│   ├── chaikin.rs      # Core algorithm implementation
+│   └── animation.rs    # Animation and state management
+├── Cargo.toml          # Project dependencies and configuration
+├── README.md           # Project documentation
+└── LICENSE            # MIT License
+```
+
+## Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest features
+- Submit pull requests
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Authors
+
+- oumouma
+- shayo victor
+- Elijah Gathanga
+
+## Acknowledgments
+
+- Thanks to George Chaikin for the original algorithm (1974)
+- Built with [Macroquad](https://github.com/not-fl3/macroquad)
