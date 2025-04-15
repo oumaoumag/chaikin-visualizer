@@ -19,8 +19,8 @@ pub struct AnimationManager {
     pub current_step: usize,             // Current step being displayed
     pub animation_timer: f32,           // Timer for animation transitions
     pub animation_speed: f32,           // Speed of animation in seconds per step
-    dragging_point_index: Option<usize>, // Stores point being dragged (if any) 
-    drag_threshold: f32,                 // How close the a point the mouse needs to be( in pixels) to select it
+    pub dragging_point_index: Option<usize>, // Stores point being dragged (if any) 
+    pub drag_threshold: f32,                 // How close the a point the mouse needs to be( in pixels) to select it
 }   
 
 impl AnimationManager {
