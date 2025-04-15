@@ -33,10 +33,6 @@ async fn main() {
             }
         }
 
-        if is_mouse_button_pressed(MouseButton::Left) && matches!(animation_manager.state, AppState::Drawing) {
-            animation_manager.add_point(mouse_position);
-        }
-
         if is_key_pressed(KeyCode::Enter) && matches!(animation_manager.state, AppState::Drawing) {
             animation_manager.start_animation();
         }
