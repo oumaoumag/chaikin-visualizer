@@ -3,11 +3,21 @@ mod chaikin;
 
 use macroquad::prelude::*;
 use macroquad::math::Vec2;
+use macroquad::window::Conf;
 
 use animation::AnimationManager;
 use animation::AppState;
 
-#[macroquad::main("Chaikin's Algorithm")]
+fn widow_conf() -> Conf {
+    Conf {
+        window_title: "Chaikin's Algorithm".to_owned(),
+        window_width: 1024,
+        window_height: 768,
+        ..Default::default()
+    }
+}
+
+#[macroquad::main(widow_conf)]
 async fn main() {
     let mut animation_manager = AnimationManager::new();
 
@@ -31,6 +41,10 @@ async fn main() {
             if is_mouse_button_released(MouseButton::Left) {
                 animation_manager.stop_dragging();
             }
+        }
+
+        if is_key_pressed(KeyCode::Space) {
+            animation_manager.toggle_animation_pause();
         }
 
         if is_key_pressed(KeyCode::Enter) && matches!(animation_manager.state, AppState::Drawing) {
