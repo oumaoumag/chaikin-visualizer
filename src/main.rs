@@ -12,8 +12,10 @@ async fn main() {
     let mut animation_manager = AnimationManager::new();
 
     loop {
+        let mouse_position = Vec2::new(mouse_position().0, mouse_position().1);
+
+        if matches!(animation_manager.state, AppS)
         if is_mouse_button_pressed(MouseButton::Left) && matches!(animation_manager.state, AppState::Drawing) {
-            let mouse_position = Vec2::new(mouse_position().0, mouse_position().1);
             animation_manager.add_point(mouse_position);
         }
 
