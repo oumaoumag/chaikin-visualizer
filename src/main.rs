@@ -14,7 +14,18 @@ async fn main() {
     loop {
         let mouse_position = Vec2::new(mouse_position().0, mouse_position().1);
 
-        if matches!(animation_manager.state, AppS)
+        if is_mouse_button_pressed(MouseButton::Left) {
+            animation_manager.start_dragging(mouse_position);
+        }
+
+        if is_mouse_botton_down(MouseButton::Left) {
+            animation_manager.update_dragging(mouse_position);
+        }
+
+        if is_mouse_button_release(MouseButton::Left) {
+            animation_manager.stop_dragging();
+        }
+
         if is_mouse_button_pressed(MouseButton::Left) && matches!(animation_manager.state, AppState::Drawing) {
             animation_manager.add_point(mouse_position);
         }
