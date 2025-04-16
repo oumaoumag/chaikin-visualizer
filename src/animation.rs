@@ -22,9 +22,9 @@ pub struct AnimationManager {
     pub drag_threshold: f32,                  // How close to a point the mouse needs to be (in pixels) to select it
 }
 
-impl AnimationManager {
+impl Default for AnimationManager {
     // Creates a new animation manager with default values
-    pub fn new() -> Self {
+    fn default() -> Self {      
         Self {
             points: Vec::new(),
             state: AppState::Drawing,
@@ -36,8 +36,14 @@ impl AnimationManager {
             drag_threshold: 10.0, // Distance in pixexls todetect point selection
         }
     }
+}
 
-    // Adds a point to the list of control points
+impl AnimationManager {
+
+    pub fn new() -> Self {
+        Self::default()
+    }
+        // Adds a point to the list of control points
     pub fn add_point(&mut self, position: Vec2) {
         self.points.push(position);
     }
